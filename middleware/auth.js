@@ -28,7 +28,7 @@ exports.checkAuthen = (req, res, next) => {
             const { authToken } = req;
             const user = await admin.auth().verifyIdToken(authToken);
             req.authId = user.uid;
-            console.log(req.authId);
+
             return next();
         } catch (err) {
             console.log(err);

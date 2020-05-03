@@ -17,7 +17,11 @@ app.use(cors());
 // ─── ROUTE ──────────────────────────────────────────────────────────────────────
 //
 const auth = require('./routes/api/auth');
+const post = require('./routes/api/post');
+const user = require('./routes/api/user');
 app.use('/api/auth/', auth);
+app.use('/api/posts/', post);
+app.use('/api/users/', user);
 //
 // ─── ERRORHANDLER ───────────────────────────────────────────────────────────────
 //

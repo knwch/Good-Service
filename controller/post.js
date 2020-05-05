@@ -22,7 +22,11 @@ const validatePost = require('../utils/validators/post');
 const mapResult = (data) => {
     let result = [];
     data.map((post) => {
-        result.push(post.data());
+        const _post = {
+            ...post.data(),
+            id: post.id
+        };
+        result.push(_post);
     });
     return result;
 };
@@ -50,10 +54,12 @@ exports.createPost = asyncHandler(async (req, res, next) => {
         updateAt: null
     };
 
-    const result = await post.doc().set(postData);
+    const result = await post.add(postData);
+    const _data = await post.doc(result.id).get('server');
 
     res.status(201).json({
-        success: true
+        success: true,
+        data: _data.data()
     });
 });
 
@@ -89,11 +95,12 @@ exports.getPost = asyncHandler(async (req, res, next) => {
     });
 });
 
-// @desc    Disable Post
+// @desc    status Post
 // @route   Put /api/posts/:id
 // @acess   Private
-exports.disablePost = asyncHandler(async (req, res, next) => {
+exports.statusPost = asyncHandler(async (req, res, next) => {
     const postid = req.params.id;
+    const { statusPost } = req.body;
 
     const _post = await post.doc(postid).get('server');
 
@@ -105,8 +112,14 @@ exports.disablePost = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`User authentication`, 401));
     }
 
+    if (_post.data().postStatus === statusPost) {
+        return next(
+            new ErrorResponse(`Post is problem, please contact admin`, 400)
+        );
+    }
+
     const _update_post = await post.doc(postid).update({
-        postStatus: false,
+        postStatus: statusPost,
         updateAt: FieldValue.serverTimestamp()
     });
 

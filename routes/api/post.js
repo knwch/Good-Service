@@ -4,7 +4,7 @@ const {
     getPostbyId,
     createPost,
     getPost,
-    disablePost,
+    statusPost,
     getPostUser,
     deletePost
 } = require('../../controller/post');
@@ -21,7 +21,7 @@ router.route('/').get(getPost).post(checkAuthen, createPost);
 router
     .route('/:id')
     .get(getPostbyId)
-    .put(checkAuthen, disablePost)
+    .put(checkAuthen, statusPost)
     .delete(checkAuthen, deletePost);
 router.route('/user/:id').get(checkAuthen, getPostUser);
 // ────────────────────────────────────────────────────────────────────────────────

@@ -24,9 +24,9 @@ module.exports = validatePost = (data) => {
     if (Validator.isEmpty(data.price)) errors.price = `Price field is required`;
     if (Validator.isEmpty(data.location.address))
         errors.address = `Addres field is required`;
-    if (Validator.isLatLong(data.location.longitude))
+    if (Validator.isEmpty(data.location.longitude))
         errors.longitude = `Longitude is required`;
-    if (Validator.isLatLong(data.location.latitude))
+    if (Validator.isEmpty(data.location.latitude))
         errors.latitude = `Latitude is required`;
 
     return {

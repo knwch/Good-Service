@@ -63,10 +63,15 @@ exports.signIn = asyncHandler(async (req, res, next) => {
         .signInWithEmailAndPassword(email, password);
 
     // get token
-    const token = await user.user.getIdToken();
+    const token = await user.user.getIdToken(true);
 
     res.status(200).json({
         success: true,
-        token: token
+        token: `Bearer ${token}`
     });
 });
+
+// @desc    Signout user
+// @route   Get /api/auth/signout
+// @acess   Private
+exports.signOut = asyncHandler(async (req, res, next) => {});

@@ -57,9 +57,14 @@ exports.createPost = asyncHandler(async (req, res, next) => {
     const result = await post.add(postData);
     const _data = await post.doc(result.id).get('server');
 
+    const final_data = {
+        ..._data.data(),
+        id: result.id
+    };
+
     res.status(201).json({
         success: true,
-        data: _data.data()
+        data: final_data
     });
 });
 

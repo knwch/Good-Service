@@ -1,10 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const passport = require('passport');
 const cors = require('cors');
 const errorHandler = require('./middleware/error');
-
+const fileupload = require('express-fileupload');
 const app = express();
 //
 // ─── MIDDLEWARE ─────────────────────────────────────────────────────────────────
@@ -12,7 +11,11 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
-
+app.use(
+    fileupload({
+        limits: { fileSize: 50 * 1024 * 1024 }
+    })
+);
 //
 // ─── ROUTE ──────────────────────────────────────────────────────────────────────
 //

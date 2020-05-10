@@ -22,11 +22,13 @@ const validatePost = require('../utils/validators/post');
 const mapResult = (data) => {
     let result = [];
     data.map((post) => {
-        const _post = {
-            ...post.data(),
-            id: post.id
-        };
-        result.push(_post);
+        if (post.data().postStatus === true) {
+            const _post = {
+                ...post.data(),
+                id: post.id
+            };
+            result.push(_post);
+        }
     });
     return result;
 };
@@ -90,10 +92,11 @@ exports.getPostbyId = asyncHandler(async (req, res, next) => {
 // @route   Get /api/posts/
 // @acess   Pubilc
 exports.getPost = asyncHandler(async (req, res, next) => {
-    const snapshot = await post.where('postStatus', '==', true).get();
+    const snapshot = await post.orderBy('creatadAt', 'desc').get();
+    // console.log(snapshot.docs);
 
     const _post = mapResult(snapshot.docs);
-
+    // console.log(_post);
     res.status(200).json({
         success: true,
         data: _post

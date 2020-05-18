@@ -11,10 +11,12 @@
   "author": "Goods Team",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/storage": "^4.7.0",
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "express-fileupload": "^1.1.7-alpha.3",
     "express.js": "^1.0.0",
     "firebase": "^7.14.2",
     "firebase-admin": "^8.11.0",
